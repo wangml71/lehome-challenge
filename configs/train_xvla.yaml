@@ -1,0 +1,157 @@
+job_name: xvla_so101_softfold
+
+dataset:
+  repo_id: repo_xvla
+  root: Datasets/example/four_types_merged
+
+policy:
+  type: xvla
+  device: cuda
+  push_to_hub: false
+  repo_id: wangml71/xvla_so101_softfold
+  private:
+  tags:
+  license:
+  pretrained_path: lerobot/xvla-base
+  action_mode: so101_bimanual
+  max_action_dim: 20
+  max_state_dim: 20
+  dtype: bfloat16
+  resize_imgs_with_padding: [352, 352]
+  freeze_vision_encoder: false
+  freeze_language_encoder: false
+  train_policy_transformer: true
+  train_soft_prompts: true
+  scheduler_decay_steps: 59000
+  florence_config:
+    model_type: florence2
+    bos_token_id: 0
+    eos_token_id: 2
+    ignore_index: -100
+    is_encoder_decoder: true
+    pad_token_id: 1
+    projection_dim: 1024
+    vocab_size: 51289
+    torch_dtype: float32
+    text_config:
+      activation_dropout: 0.1
+      activation_function: gelu
+      add_bias_logits: false
+      add_final_layer_norm: false
+      attention_dropout: 0.1
+      bos_token_id: 0
+      classif_dropout: 0.1
+      classifier_dropout: 0.0
+      d_model: 1024
+      decoder_attention_heads: 16
+      decoder_ffn_dim: 4096
+      decoder_layerdrop: 0.0
+      decoder_layers: 12
+      decoder_start_token_id: 2
+      dropout: 0.1
+      early_stopping: true
+      encoder_attention_heads: 16
+      encoder_ffn_dim: 4096
+      encoder_layerdrop: 0.0
+      encoder_layers: 12
+      eos_token_id: 2
+      forced_bos_token_id: 0
+      forced_eos_token_id: 2
+      gradient_checkpointing: false
+      init_std: 0.02
+      is_encoder_decoder: true
+      label2id:
+        LABEL_0: 0
+        LABEL_1: 1
+        LABEL_2: 2
+      max_position_embeddings: 4096
+      no_repeat_ngram_size: 3
+      normalize_before: false
+      num_beams: 3
+      num_hidden_layers: 12
+      pad_token_id: 1
+      scale_embedding: false
+      vocab_size: 51289
+    vision_config:
+      model_type: davit
+      depths: [1, 1, 9, 1]
+      dim_embed: [256, 512, 1024, 2048]
+      drop_path_rate: 0.1
+      enable_checkpoint: false
+      image_feature_source:
+        - spatial_avg_pool
+        - temporal_avg_pool
+      image_pos_embed:
+        max_pos_embeddings: 50
+        type: learned_abs_2d
+      num_groups: [8, 16, 32, 64]
+      num_heads: [8, 16, 32, 64]
+      patch_padding: [3, 1, 1, 1]
+      patch_prenorm: [false, true, true, true]
+      patch_size: [7, 3, 3, 3]
+      patch_stride: [4, 2, 2, 2]
+      projection_dim: 1024
+      visual_temporal_embedding:
+        max_temporal_embeddings: 100
+        type: COSINE
+      window_size: 12
+  tokenizer_name: facebook/bart-large
+  tokenizer_max_length: 64
+  tokenizer_padding_side: right
+  pad_language_to: max_length
+  hidden_size: 1024
+  depth: 24
+  num_heads: 16
+  mlp_ratio: 4.0
+  num_domains: 30
+  len_soft_prompts: 32
+  dim_time: 32
+  max_len_seq: 512
+  use_hetero_proj: false
+  num_denoising_steps: 10
+  use_proprio: true
+  domain_feature_key:
+  num_image_views: 3
+  empty_cameras: 0
+  input_features:
+    observation.state:
+      type: STATE
+      shape: [12]
+    observation.images.top_rgb:
+      type: VISUAL
+      shape: [3, 480, 640]
+    observation.images.left_rgb:
+      type: VISUAL
+      shape: [3, 480, 640]
+    observation.images.right_rgb:
+      type: VISUAL
+      shape: [3, 480, 640]
+  output_features:
+    action:
+      type: ACTION
+      shape: [12]
+  n_obs_steps: 1
+  use_amp: false
+  chunk_size: 32
+  n_action_steps: 32
+  normalization_mapping:
+    STATE: IDENTITY
+    ACTION: IDENTITY
+    VISUAL: IDENTITY
+  optimizer_lr: 0.0001
+  optimizer_betas:
+    - 0.9
+    - 0.99
+  optimizer_eps: 1e-08
+  optimizer_weight_decay: 0.0
+  optimizer_grad_clip_norm: 10.0
+  scheduler_warmup_steps: 1000
+  scheduler_decay_lr: 2.5e-06
+
+output_dir: outputs/train/xvla_four_types
+batch_size: 8
+steps: 60000
+log_freq: 1000
+save_freq: 5000
+wandb:
+  enable: false

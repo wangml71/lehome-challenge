@@ -75,7 +75,7 @@ policy:
   license: null
   use_amp: false
   use_peft: false
-  pretrained_path: /root/gpufree-share/outputs/train/xvla_four_types/checkpoints/last/pretrained_model
+  pretrained_path: lerobot/xvla-folding
   chunk_size: 32
   n_action_steps: 32
   dtype: bfloat16
@@ -183,8 +183,8 @@ policy:
   train_soft_prompts: true
   optimizer_lr: 0.0001
   optimizer_betas:
-    - 0.9
-    - 0.99
+    - 0.95
+    - 0.999
   optimizer_eps: 1e-08
   optimizer_weight_decay: 0.0
   optimizer_grad_clip_norm: 10.0
@@ -194,13 +194,13 @@ policy:
   scheduler_decay_steps: 59000
   scheduler_decay_lr: 2.5e-06
 
-output_dir: /root/gpufree-share/outputs/train/xvla_four_types
-resume: true
+output_dir: /root/gpufree-share/outputs/train/xvla_folding
+resume: false
 seed: 1000
 num_workers: 4
 batch_size: 12
 steps: 60000
-eval_freq: 20000
+eval_freq: 10000
 log_freq: 1000
 tolerance_s: 0.0001
 save_checkpoint: true
@@ -211,7 +211,7 @@ optimizer:
   lr: 0.0001
   weight_decay: 0.0
   grad_clip_norm: 10.0
-  betas: [0.9, 0.99]
+  betas: [0.95, 0.999]
   eps: 1e-08
   soft_prompt_lr_scale: 1.0
   soft_prompt_warmup_lr_scale: null
@@ -240,4 +240,3 @@ rabc_kappa: 0.01
 rabc_epsilon: 1e-06
 rabc_head_mode: sparse
 rename_map: {}
-checkpoint_path: /root/gpufree-share/outputs/train/xvla_four_types/checkpoints/last

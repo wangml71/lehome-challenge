@@ -1,0 +1,360 @@
+{
+    "dataset": {
+        "repo_id": "repo_xvla",
+        "root": "/root/gpufree-data/Datasets/example/four_types_merged",
+        "episodes": null,
+        "image_transforms": {
+            "enable": false,
+            "max_num_transforms": 3,
+            "random_order": false,
+            "tfs": {
+                "brightness": {
+                    "weight": 1.0,
+                    "type": "ColorJitter",
+                    "kwargs": {
+                        "brightness": [
+                            0.8,
+                            1.2
+                        ]
+                    }
+                },
+                "contrast": {
+                    "weight": 1.0,
+                    "type": "ColorJitter",
+                    "kwargs": {
+                        "contrast": [
+                            0.8,
+                            1.2
+                        ]
+                    }
+                },
+                "saturation": {
+                    "weight": 1.0,
+                    "type": "ColorJitter",
+                    "kwargs": {
+                        "saturation": [
+                            0.5,
+                            1.5
+                        ]
+                    }
+                },
+                "hue": {
+                    "weight": 1.0,
+                    "type": "ColorJitter",
+                    "kwargs": {
+                        "hue": [
+                            -0.05,
+                            0.05
+                        ]
+                    }
+                },
+                "sharpness": {
+                    "weight": 1.0,
+                    "type": "SharpnessJitter",
+                    "kwargs": {
+                        "sharpness": [
+                            0.5,
+                            1.5
+                        ]
+                    }
+                },
+                "affine": {
+                    "weight": 1.0,
+                    "type": "RandomAffine",
+                    "kwargs": {
+                        "degrees": [
+                            -5.0,
+                            5.0
+                        ],
+                        "translate": [
+                            0.05,
+                            0.05
+                        ]
+                    }
+                }
+            }
+        },
+        "revision": null,
+        "use_imagenet_stats": true,
+        "video_backend": "torchcodec",
+        "streaming": false
+    },
+    "env": null,
+    "policy": {
+        "type": "xvla",
+        "n_obs_steps": 1,
+        "input_features": {
+            "observation.state": {
+                "type": "STATE",
+                "shape": [
+                    12
+                ]
+            },
+            "observation.images.top_rgb": {
+                "type": "VISUAL",
+                "shape": [
+                    3,
+                    480,
+                    640
+                ]
+            },
+            "observation.images.left_rgb": {
+                "type": "VISUAL",
+                "shape": [
+                    3,
+                    480,
+                    640
+                ]
+            },
+            "observation.images.right_rgb": {
+                "type": "VISUAL",
+                "shape": [
+                    3,
+                    480,
+                    640
+                ]
+            }
+        },
+        "output_features": {
+            "action": {
+                "type": "ACTION",
+                "shape": [
+                    12
+                ]
+            }
+        },
+        "device": "cuda",
+        "use_amp": false,
+        "use_peft": false,
+        "push_to_hub": false,
+        "repo_id": "wangml71/xvla_so101_softfold",
+        "private": null,
+        "tags": null,
+        "license": null,
+        "pretrained_path": "/root/gpufree-share/outputs/train/xvla_four_types/checkpoints/last/pretrained_model",
+        "chunk_size": 32,
+        "n_action_steps": 32,
+        "dtype": "bfloat16",
+        "normalization_mapping": {
+            "VISUAL": "IDENTITY",
+            "STATE": "IDENTITY",
+            "ACTION": "IDENTITY"
+        },
+        "florence_config": {
+            "model_type": "florence2",
+            "bos_token_id": 0,
+            "eos_token_id": 2,
+            "ignore_index": -100,
+            "is_encoder_decoder": true,
+            "pad_token_id": 1,
+            "projection_dim": 1024,
+            "vocab_size": 51289,
+            "torch_dtype": "float32",
+            "text_config": {
+                "activation_dropout": 0.1,
+                "activation_function": "gelu",
+                "add_bias_logits": false,
+                "add_final_layer_norm": false,
+                "attention_dropout": 0.1,
+                "bos_token_id": 0,
+                "classif_dropout": 0.1,
+                "classifier_dropout": 0.0,
+                "d_model": 1024,
+                "decoder_attention_heads": 16,
+                "decoder_ffn_dim": 4096,
+                "decoder_layerdrop": 0.0,
+                "decoder_layers": 12,
+                "decoder_start_token_id": 2,
+                "dropout": 0.1,
+                "early_stopping": true,
+                "encoder_attention_heads": 16,
+                "encoder_ffn_dim": 4096,
+                "encoder_layerdrop": 0.0,
+                "encoder_layers": 12,
+                "eos_token_id": 2,
+                "forced_bos_token_id": 0,
+                "forced_eos_token_id": 2,
+                "gradient_checkpointing": false,
+                "init_std": 0.02,
+                "is_encoder_decoder": true,
+                "label2id": {
+                    "LABEL_0": 0,
+                    "LABEL_1": 1,
+                    "LABEL_2": 2
+                },
+                "max_position_embeddings": 4096,
+                "no_repeat_ngram_size": 3,
+                "normalize_before": false,
+                "num_beams": 3,
+                "num_hidden_layers": 12,
+                "pad_token_id": 1,
+                "scale_embedding": false,
+                "vocab_size": 51289
+            },
+            "vision_config": {
+                "model_type": "davit",
+                "depths": [
+                    1,
+                    1,
+                    9,
+                    1
+                ],
+                "dim_embed": [
+                    256,
+                    512,
+                    1024,
+                    2048
+                ],
+                "drop_path_rate": 0.1,
+                "enable_checkpoint": false,
+                "image_feature_source": [
+                    "spatial_avg_pool",
+                    "temporal_avg_pool"
+                ],
+                "image_pos_embed": {
+                    "max_pos_embeddings": 50,
+                    "type": "learned_abs_2d"
+                },
+                "num_groups": [
+                    8,
+                    16,
+                    32,
+                    64
+                ],
+                "num_heads": [
+                    8,
+                    16,
+                    32,
+                    64
+                ],
+                "patch_padding": [
+                    3,
+                    1,
+                    1,
+                    1
+                ],
+                "patch_prenorm": [
+                    false,
+                    true,
+                    true,
+                    true
+                ],
+                "patch_size": [
+                    7,
+                    3,
+                    3,
+                    3
+                ],
+                "patch_stride": [
+                    4,
+                    2,
+                    2,
+                    2
+                ],
+                "projection_dim": 1024,
+                "visual_temporal_embedding": {
+                    "max_temporal_embeddings": 100,
+                    "type": "COSINE"
+                },
+                "window_size": 12
+            }
+        },
+        "tokenizer_name": "facebook/bart-large",
+        "tokenizer_max_length": 64,
+        "tokenizer_padding_side": "right",
+        "pad_language_to": "max_length",
+        "hidden_size": 1024,
+        "depth": 24,
+        "num_heads": 16,
+        "mlp_ratio": 4.0,
+        "num_domains": 30,
+        "len_soft_prompts": 32,
+        "dim_time": 32,
+        "max_len_seq": 512,
+        "use_hetero_proj": false,
+        "action_mode": "so101_bimanual",
+        "num_denoising_steps": 10,
+        "use_proprio": true,
+        "max_state_dim": 20,
+        "max_action_dim": 20,
+        "domain_feature_key": null,
+        "resize_imgs_with_padding": [
+            352,
+            352
+        ],
+        "num_image_views": 3,
+        "empty_cameras": 0,
+        "freeze_vision_encoder": false,
+        "freeze_language_encoder": false,
+        "train_policy_transformer": true,
+        "train_soft_prompts": true,
+        "optimizer_lr": 0.0001,
+        "optimizer_betas": [
+            0.9,
+            0.99
+        ],
+        "optimizer_eps": 1e-08,
+        "optimizer_weight_decay": 0.0,
+        "optimizer_grad_clip_norm": 10.0,
+        "optimizer_soft_prompt_lr_scale": 1.0,
+        "optimizer_soft_prompt_warmup_lr_scale": null,
+        "scheduler_warmup_steps": 1000,
+        "scheduler_decay_steps": 59000,
+        "scheduler_decay_lr": 2.5e-06
+    },
+    "output_dir": "/root/gpufree-share/outputs/train/xvla_four_types",
+    "job_name": "xvla_so101_softfold",
+    "resume": true,
+    "seed": 1000,
+    "num_workers": 4,
+    "batch_size": 8,
+    "steps": 60000,
+    "eval_freq": 20000,
+    "log_freq": 1000,
+    "tolerance_s": 0.0001,
+    "save_checkpoint": true,
+    "save_freq": 5000,
+    "use_policy_training_preset": true,
+    "optimizer": {
+        "type": "xvla-adamw",
+        "lr": 0.0001,
+        "weight_decay": 0.0,
+        "grad_clip_norm": 10.0,
+        "betas": [
+            0.9,
+            0.99
+        ],
+        "eps": 1e-08,
+        "soft_prompt_lr_scale": 1.0,
+        "soft_prompt_warmup_lr_scale": null
+    },
+    "scheduler": {
+        "type": "cosine_decay_with_warmup",
+        "num_warmup_steps": 1000,
+        "num_decay_steps": 59000,
+        "peak_lr": 0.0001,
+        "decay_lr": 2.5e-06
+    },
+    "eval": {
+        "n_episodes": 50,
+        "batch_size": 50,
+        "use_async_envs": false
+    },
+    "wandb": {
+        "enable": false,
+        "disable_artifact": false,
+        "project": "lerobot",
+        "entity": null,
+        "notes": null,
+        "run_id": null,
+        "mode": null
+    },
+    "peft": null,
+    "use_rabc": false,
+    "rabc_progress_path": null,
+    "rabc_kappa": 0.01,
+    "rabc_epsilon": 1e-06,
+    "rabc_head_mode": "sparse",
+    "rename_map": {},
+    "checkpoint_path": "/root/gpufree-share/outputs/train/xvla_four_types/checkpoints/last"
+}
